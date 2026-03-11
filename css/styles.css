@@ -201,6 +201,35 @@ input, select, textarea { font-family: inherit; }
 }
 .site-header.scrolled { box-shadow: 0 2px 24px rgba(0,0,0,.35); }
 
+/* Home + service pages: white navbar */
+.page-home .site-header,
+.page-white-nav .site-header {
+  background: white;
+}
+.page-home .site-header.scrolled,
+.page-white-nav .site-header.scrolled {
+  box-shadow: 0 2px 16px rgba(0,0,0,.08);
+}
+.page-home .nav-link,
+.page-home .nav-dropdown-trigger,
+.page-white-nav .nav-link,
+.page-white-nav .nav-dropdown-trigger {
+  color: var(--color-primary);
+}
+.page-home .nav-link:hover,
+.page-home .nav-link.active,
+.page-home .nav-dropdown-trigger:hover,
+.page-white-nav .nav-link:hover,
+.page-white-nav .nav-link.active,
+.page-white-nav .nav-dropdown-trigger:hover {
+  color: var(--color-primary);
+  background: rgba(0,0,0,.06);
+}
+.page-home .mobile-toggle span,
+.page-white-nav .mobile-toggle span {
+  background: var(--color-primary);
+}
+
 /* Nav bar: full-width wrapper, inner max 1536px */
 .nav-bar {
   width: 100%;
@@ -247,8 +276,15 @@ input, select, textarea { font-family: inherit; }
   gap: .625rem;
 }
 .logo-img {
-  height: 44px;
+  height: 52px;
   width: auto;
+}
+/* Ensure header logo same size on all pages (home, services, contact) */
+.site-header .logo-img,
+.nav-bar .logo-img {
+  height: 52px;
+  width: auto;
+  min-height: 52px;
 }
 .logo-mark {
   width: 38px;
@@ -536,6 +572,7 @@ input, select, textarea { font-family: inherit; }
 }
 /* Per-service hero images (match filenames in images folder) */
 .service-hero--pressure { background-image: url('../images/pressurewashing.jpeg'); }
+.service-hero--interior-window { background-image: url('../images/interiorwindowcleaninghero.jpeg'); }
 .service-hero--soft { background-image: url('../images/softwashing.jpeg'); }
 .service-hero--window { background-image: url('../images/windowcleaning.jpeg'); }
 .service-hero--roof { background-image: url('../images/roofwashing.jpeg'); }
@@ -695,13 +732,18 @@ input, select, textarea { font-family: inherit; }
   gap: 1.5rem;
   justify-content: center;
 }
-@media (min-width: 1280px) {
+@media (min-width: 768px) {
   .services-flex {
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(2, 1fr);
     gap: 1.5rem;
   }
   .service-card { max-width: none; }
+}
+@media (min-width: 1024px) {
+  .services-flex {
+    grid-template-columns: repeat(4, 1fr);
+  }
 }
 .service-card {
   background: white;
@@ -732,10 +774,12 @@ input, select, textarea { font-family: inherit; }
 /* Service cards with background images */
 .service-card--pressure { background-image: url('../images/pressurewashing.jpeg'); }
 .service-card--soft { background-image: url('../images/softwashing.jpeg'); }
+.service-card--interior-window { background-image: url('../images/interiorwindowcleaning.jpeg'); }
 .service-card--window { background-image: url('../images/windowcleaning.jpeg'); }
 .service-card--roof { background-image: url('../images/roofwashing.jpeg'); }
 .service-card--gutter { background-image: url('../images/guttercleaning.jpeg'); }
 .service-card--pressure,
+.service-card--interior-window,
 .service-card--soft,
 .service-card--window,
 .service-card--roof,
@@ -745,6 +789,7 @@ input, select, textarea { font-family: inherit; }
   color: white;
 }
 .service-card--pressure::before,
+.service-card--interior-window::before,
 .service-card--soft::before,
 .service-card--window::before,
 .service-card--roof::before,
@@ -757,6 +802,7 @@ input, select, textarea { font-family: inherit; }
   z-index: 0;
 }
 .service-card--pressure .service-card-icon,
+.service-card--interior-window .service-card-icon,
 .service-card--soft .service-card-icon,
 .service-card--window .service-card-icon,
 .service-card--roof .service-card-icon,
@@ -766,12 +812,15 @@ input, select, textarea { font-family: inherit; }
   z-index: 1;
 }
 .service-card--pressure .service-card-icon svg,
+.service-card--interior-window .service-card-icon svg,
 .service-card--soft .service-card-icon svg,
 .service-card--window .service-card-icon svg,
 .service-card--roof .service-card-icon svg,
 .service-card--gutter .service-card-icon svg { fill: white; }
 .service-card--pressure .service-card-title,
 .service-card--pressure .service-card-desc,
+.service-card--interior-window .service-card-title,
+.service-card--interior-window .service-card-desc,
 .service-card--soft .service-card-title,
 .service-card--soft .service-card-desc,
 .service-card--window .service-card-title,
@@ -781,11 +830,13 @@ input, select, textarea { font-family: inherit; }
 .service-card--gutter .service-card-title,
 .service-card--gutter .service-card-desc { color: white; position: relative; z-index: 1; }
 .service-card--pressure .service-card-desc,
+.service-card--interior-window .service-card-desc,
 .service-card--soft .service-card-desc,
 .service-card--window .service-card-desc,
 .service-card--roof .service-card-desc,
 .service-card--gutter .service-card-desc { color: rgba(255,255,255,.92); }
 .service-card--pressure .service-card-link,
+.service-card--interior-window .service-card-link,
 .service-card--soft .service-card-link,
 .service-card--window .service-card-link,
 .service-card--roof .service-card-link,
@@ -1339,7 +1390,8 @@ input, select, textarea { font-family: inherit; }
 .map-placeholder {
   background: #1E3A5F;
   border-radius: var(--radius-md);
-  height: 180px;
+  height: 200px;
+  max-width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1350,6 +1402,15 @@ input, select, textarea { font-family: inherit; }
   border: 2px dashed rgba(255,255,255,.1);
   flex-direction: column;
   gap: .5rem;
+  overflow: hidden;
+}
+.map-placeholder img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  border-radius: inherit;
 }
 .map-placeholder svg { width: 28px; height: 28px; fill: rgba(255,255,255,.25); }
 
@@ -1380,6 +1441,9 @@ input, select, textarea { font-family: inherit; }
   background: var(--color-primary);
   color: #D1D5DB;
   padding: 4rem 0 0;
+}
+.page-home .site-footer .footer-logo .logo-img {
+  filter: drop-shadow(0 0 10px rgba(255,255,255,.55)) drop-shadow(0 0 22px rgba(255,255,255,.25));
 }
 .footer-grid {
   display: grid;
