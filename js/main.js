@@ -25,6 +25,7 @@
     const open = toggle.classList.toggle('open');
     mobileMenu?.classList.toggle('open', open);
     document.body.style.overflow = open ? 'hidden' : '';
+    document.body.classList.toggle('menu-open', open);
   });
 
   /* ---- Mobile services accordion ---- */
@@ -42,6 +43,7 @@
       toggle?.classList.remove('open');
       mobileMenu?.classList.remove('open');
       document.body.style.overflow = '';
+      document.body.classList.remove('menu-open');
     });
   });
 
