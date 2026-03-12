@@ -573,10 +573,11 @@ body.menu-open .alert-bar { display: none; }
 }
 /* Per-service hero images (match filenames in images folder) */
 .service-hero--pressure { background-image: url('../images/pressurewashing.jpeg'); }
-.service-hero--interior-window { background-image: url('../images/interiorwindowcleaninghero.jpeg'); }
+.service-hero--interior-window { background-image: url('../images/interiorwindowcleaning.jpeg'); }
 .service-hero--soft { background-image: url('../images/softwashing.jpeg'); }
 .service-hero--window { background-image: url('../images/windowcleaning.jpeg'); }
 .service-hero--roof { background-image: url('../images/roofwashing.jpeg'); }
+.service-hero--solar { background-image: url('../images/solarpanelcleaning.jpeg'); }
 .service-hero--gutter { background-image: url('../images/guttercleaning.jpeg'); }
 .service-hero::before {
   content: '';
@@ -778,12 +779,14 @@ body.menu-open .alert-bar { display: none; }
 .service-card--interior-window { background-image: url('../images/interiorwindowcleaning.jpeg'); }
 .service-card--window { background-image: url('../images/windowcleaning.jpeg'); }
 .service-card--roof { background-image: url('../images/roofwashing.jpeg'); }
+.service-card--solar { background-image: url('../images/solarpanelcleaning.jpeg'); }
 .service-card--gutter { background-image: url('../images/guttercleaning.jpeg'); }
 .service-card--pressure,
 .service-card--interior-window,
 .service-card--soft,
 .service-card--window,
 .service-card--roof,
+.service-card--solar,
 .service-card--gutter {
   background-size: cover;
   background-position: center;
@@ -794,6 +797,7 @@ body.menu-open .alert-bar { display: none; }
 .service-card--soft::before,
 .service-card--window::before,
 .service-card--roof::before,
+.service-card--solar::before,
 .service-card--gutter::before {
   content: '';
   position: absolute;
@@ -807,6 +811,7 @@ body.menu-open .alert-bar { display: none; }
 .service-card--soft .service-card-icon,
 .service-card--window .service-card-icon,
 .service-card--roof .service-card-icon,
+.service-card--solar .service-card-icon,
 .service-card--gutter .service-card-icon {
   background: rgba(255,255,255,.2);
   position: relative;
@@ -817,6 +822,7 @@ body.menu-open .alert-bar { display: none; }
 .service-card--soft .service-card-icon svg,
 .service-card--window .service-card-icon svg,
 .service-card--roof .service-card-icon svg,
+.service-card--solar .service-card-icon svg,
 .service-card--gutter .service-card-icon svg { fill: white; }
 .service-card--pressure .service-card-title,
 .service-card--pressure .service-card-desc,
@@ -828,6 +834,8 @@ body.menu-open .alert-bar { display: none; }
 .service-card--window .service-card-desc,
 .service-card--roof .service-card-title,
 .service-card--roof .service-card-desc,
+.service-card--solar .service-card-title,
+.service-card--solar .service-card-desc,
 .service-card--gutter .service-card-title,
 .service-card--gutter .service-card-desc { color: white; position: relative; z-index: 1; }
 .service-card--pressure .service-card-desc,
@@ -835,12 +843,14 @@ body.menu-open .alert-bar { display: none; }
 .service-card--soft .service-card-desc,
 .service-card--window .service-card-desc,
 .service-card--roof .service-card-desc,
+.service-card--solar .service-card-desc,
 .service-card--gutter .service-card-desc { color: rgba(255,255,255,.92); }
 .service-card--pressure .service-card-link,
 .service-card--interior-window .service-card-link,
 .service-card--soft .service-card-link,
 .service-card--window .service-card-link,
 .service-card--roof .service-card-link,
+.service-card--solar .service-card-link,
 .service-card--gutter .service-card-link { color: #93C5FD; position: relative; z-index: 1; }
 
 .service-card-icon {
@@ -1006,7 +1016,13 @@ body.menu-open .alert-bar { display: none; }
   grid-template-columns: repeat(2, 1fr);
   gap: .875rem;
 }
-@media (min-width: 640px)  { .gallery-grid { grid-template-columns: repeat(3, 1fr); } }
+@media (min-width: 640px)  {
+  .gallery-grid {
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    grid-auto-flow: column; /* stack each before/after pair vertically */
+  }
+}
 
 .gallery-item {
   position: relative;
@@ -1025,10 +1041,31 @@ body.menu-open .alert-bar { display: none; }
   color: rgba(255,255,255,.5);
   font-size: .75rem;
   font-weight: 600;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  position: relative;
 }
 .gallery-bg--before { background: linear-gradient(135deg, #3D2B1E 0%, #5A3D2B 50%, #2E1F0F 100%); }
 .gallery-bg--after  { background: linear-gradient(135deg, #0A1628 0%, #1B6FEE 70%, #60A5FA 100%); }
 .gallery-bg svg { width: 28px; height: 28px; fill: rgba(255,255,255,.35); }
+
+/* Photo-backed gallery tiles */
+.gallery-bg--photo {
+  background-size: contain; /* fit whole image, no zoom/crop */
+  background-position: center;
+  background-color: #0A1628; /* fill any letterboxing */
+}
+.gallery-bg--photo::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(0,0,0,.25) 0%, rgba(0,0,0,.35) 100%);
+}
+.gallery-bg--photo svg,
+.gallery-bg--photo span {
+  display: none;
+}
 
 .gallery-label {
   position: absolute;
@@ -1443,7 +1480,7 @@ body.menu-open .alert-bar { display: none; }
   color: #D1D5DB;
   padding: 4rem 0 0;
 }
-.page-home .site-footer .footer-logo .logo-img {
+.site-footer .footer-logo .logo-img {
   filter: drop-shadow(0 0 10px rgba(255,255,255,.55)) drop-shadow(0 0 22px rgba(255,255,255,.25));
 }
 .footer-grid {
